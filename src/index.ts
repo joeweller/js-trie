@@ -1,0 +1,2 @@
+const datafile = "./../assets/data";
+
