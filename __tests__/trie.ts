@@ -1,4 +1,4 @@
-import { Trie } from './../trie'
+import { Trie } from '../lib/trie'
 
 
 // path to large list of words for testing
