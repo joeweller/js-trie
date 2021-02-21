@@ -100,7 +100,7 @@ class Trie {
      * @description loads a single word as string into the Trie and marked as a word
      * @param word string to be loaded
      */
-    public loadWord(word: string): void {
+    public load(word: string): void {
         if (this._ignoreCase) { word = word.toLowerCase() };
 
         const wordEnd: number = (word.length - 1);
@@ -114,9 +114,9 @@ class Trie {
      * @description loads an array of strings into the Trie
      * @param wordArray array of words as string
      */
-    public loadWords(wordArray: Array<string>): void {
+    public loadAll(wordArray: Array<string>): void {
         for (let i = 0; i < wordArray.length; i++) {
-            this.loadWord(wordArray[i]);
+            this.load(wordArray[i]);
         };
     };
 
@@ -125,12 +125,14 @@ class Trie {
      * @param word string to find within Trie
      * @returns boolean whether or not word exists
      */
-    public isWord(word: string): boolean {
+    public exists(word: string): boolean {
         if (this._ignoreCase) { word = word.toLowerCase() };
         try {
             return this.traverseTrie(word).nodeIsWord();
         } catch (ex) {
-            console.log(JSON.stringify(ex));
+            if (!(ex instanceof TypeError)) {
+                throw ex;
+            }
             // something happened during traversal.
             // this will usually 
             // it probably is not a word, swallow exception and return false

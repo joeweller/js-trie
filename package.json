@@ -1,5 +1,5 @@
 {
-  "name": "js-search-test",
+  "name": "js-trie",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,8 +14,7 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "tsc",
-    "start": "npm run build && node ./bin/index.js"
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC"

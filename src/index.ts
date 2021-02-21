@@ -1,2 +1,0 @@
-const datafile = "./../assets/data";
-
