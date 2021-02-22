@@ -14,7 +14,7 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "tsc",
+    "compile": "tsc",
     "postinstall": "npm i"
   },
   "author": "",

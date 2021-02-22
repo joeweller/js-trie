@@ -1,9 +1,4 @@
-import { Trie } from '../lib/trie'
-
-
-// path to large list of words for testing
-// https://github.com/dwyl/english-words
-// count: ~466k words
+import { Trie } from '../src/trie'
 
 describe('trie load and identifies word (single)', () => {
     
@@ -175,3 +170,122 @@ describe('Trie load and identifies with special characters', () => {
     })
 })
 
+describe('delete word (single) from Trie', () => {
+    it('load word and delete it (case sensitive)', () => {
+        const trie = new Trie();
+        trie.loadAll(["apple", "Apple"]);
+
+        expect(trie.exists("apple")).toBe(true);
+        expect(trie.exists("Apple")).toBe(true);
+
+        trie.delete("apple");
+
+        expect(trie.exists("apple")).toBe(false);
+        expect(trie.exists("Apple")).toBe(true);
+    })
+
+    it('load word and delete it (case insensitive)', () => {
+        const trie = new Trie(true);
+        trie.loadAll(["apple", "Apple"]);
+
+        expect(trie.exists("apple")).toBe(true);
+        expect(trie.exists("Apple")).toBe(true);
+
+        trie.delete("apple");
+
+        expect(trie.exists("apple")).toBe(false);
+        expect(trie.exists("Apple")).toBe(false);
+    })
+
+    it('load word and delete it (sequential - case sensitive)', () => {
+        const trie = new Trie();
+        trie.loadAll(["apple", "Apple",  "apples"]);
+
+        expect(trie.exists("Apple")).toBe(true);
+        expect(trie.exists("apple")).toBe(true);
+        expect(trie.exists("apples")).toBe(true);
+        
+        trie.delete("apple");
+        
+        expect(trie.exists("Apple")).toBe(true);
+        expect(trie.exists("apples")).toBe(true);
+        expect(trie.exists("apple")).toBe(false);
+    })
+
+    it('load word and delete it (sequential - case insensitive)', () => {
+        const trie = new Trie(true);
+        trie.loadAll(["apple", "Apple",  "apples"]);
+
+        expect(trie.exists("Apple")).toBe(true);
+        expect(trie.exists("apple")).toBe(true);
+        expect(trie.exists("apples")).toBe(true);
+        
+        trie.delete("apple");
+        
+        expect(trie.exists("apples")).toBe(true);
+        expect(trie.exists("Apple")).toBe(false);
+        expect(trie.exists("apple")).toBe(false);
+    })
+})
+
+describe('delete words (multiple) from Trie', () => {
+    it('load word and delete it (case sensitive)', () => {
+        const trie = new Trie();
+        trie.loadAll(["apple", "Apple", "apricot", "Apricot"]);
+
+        expect(trie.exists("apple")).toBe(true);
+        expect(trie.exists("Apple")).toBe(true);
+        expect(trie.exists("apricot")).toBe(true);
+        expect(trie.exists("Apricot")).toBe(true);
+        
+        trie.deleteAll(["apple", "apricot"]);
+        
+        expect(trie.exists("apple")).toBe(false);
+        expect(trie.exists("Apple")).toBe(true);
+        expect(trie.exists("apricot")).toBe(false);
+        expect(trie.exists("Apricot")).toBe(true);
+    })
+
+    it('load word and delete it (case insensitive)', () => {
+        const trie = new Trie(true);
+        trie.loadAll(["apple", "Apple"]);
+
+        expect(trie.exists("apple")).toBe(true);
+        expect(trie.exists("Apple")).toBe(true);
+
+        trie.deleteAll(["apple"]);
+
+        expect(trie.exists("apple")).toBe(false);
+        expect(trie.exists("Apple")).toBe(false);
+    })
+
+    it('load word and delete it (sequential - case sensitive)', () => {
+        const trie = new Trie();
+        trie.loadAll(["apple", "Apple",  "apples"]);
+
+        expect(trie.exists("Apple")).toBe(true);
+        expect(trie.exists("apple")).toBe(true);
+        expect(trie.exists("apples")).toBe(true);
+        
+        trie.deleteAll(["apple"]);
+        
+        expect(trie.exists("Apple")).toBe(true);
+        expect(trie.exists("apples")).toBe(true);
+        expect(trie.exists("apple")).toBe(false);
+    })
+
+    it('load word and delete it (sequential - case insensitive)', () => {
+        const trie = new Trie(true);
+        trie.loadAll(["apple", "Apple",  "apples"]);
+
+        expect(trie.exists("Apple")).toBe(true);
+        expect(trie.exists("apple")).toBe(true);
+        expect(trie.exists("apples")).toBe(true);
+        
+        trie.deleteAll(["apple"]);
+        
+        expect(trie.exists("apples")).toBe(true);
+        expect(trie.exists("Apple")).toBe(false);
+        expect(trie.exists("apple")).toBe(false);
+    })
+})
