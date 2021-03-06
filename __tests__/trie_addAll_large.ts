@@ -1,4 +1,4 @@
-import { Trie } from '../src/trie'
+import { Trie } from '../src/index'
 
 describe('Trie add and identifies words (array)', () => {
     it('add all words (single)', () => {

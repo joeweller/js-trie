@@ -1,8 +1,8 @@
 
-/** @module trie */
+import { TriePopularSearchNode } from './triepopularsearch'
 import { exception } from "console";
 
-export { Trie }
+export { Trie, TrieNode }
 
 /**
  * @private
@@ -11,8 +11,8 @@ export { Trie }
  * @param isEnd denotes Trie node is end of a word upon instantiation
  */
 class TrieNode {
-    private _node: Record<string, TrieNode>;
-    private _isWord: boolean;
+    public _node: Record<string, TrieNode>;
+    public _isWord: boolean;
 
     /**
      * @constructor
@@ -65,34 +65,37 @@ class TrieNode {
  * @description Trie Object structure
  */
 class Trie {
-    private _head: TrieNode;
-    private _ignoreCase: boolean;
+    public _head: TrieNode | TriePopularSearchNode;
+    public _ignoreCase: boolean;
 
     /**
-     * @description traverse Trie to lookup a word
-     * @param {string} word string for Trie lookup
-     * @returns {TrieNode}
-     */
-    private traverseTrie(word: string): TrieNode {
-        var node: TrieNode = this._head;
-        for (let i = 0; i < word.length; i++) {
-            node = node.next(word[i]);
-        };
-
-        if (node === undefined || node === null) {
-            throw exception(`TrieNode does not exist for "${word[word.length - 1]}": word[${word.length - 1}]`);
-        } else {
-            return node;
-        };
-    };
-
-    /**
+     * @constructor
      * @param {boolean} ignoreCase identifies if Trie should ignore case
      */
     constructor(ignoreCase?: boolean) {
         this._head = new TrieNode(false);
         this._ignoreCase = ignoreCase || false;
     };
+
+    /**
+     * @description traverse Trie to lookup a word
+     * @param {string} word string for Trie lookup
+     * @returns {TrieNode}
+     */
+    private traverse(word: string): TrieNode {
+        var node: TrieNode = this._head;
+
+        try {
+            for (let i = 0; i < word.length; i++) {
+                node = node.next(word[i]);
+            };
+        } catch (ex) {
+            throw exception(`TrieNode does not exist for "${word[word.length - 1]}": word[${word.length - 1}]`);
+        };
+        
+        return node;
+    };
+
 
     /**
      * @description describes current Trie state that detmines if methods 
@@ -148,7 +151,7 @@ class Trie {
             };
             current.isWord(false);
         } catch (ex) {
-            // something happened suring traversal. TypeError suggests there is
+            // something happened during traversal. TypeError suggests there is
             // no further nodes to traverse. word does not exist!
             // aka.. there's nothing to delete!
             if (!(ex instanceof TypeError)) {
@@ -178,7 +181,7 @@ class Trie {
     public exists(word: string): boolean {
         if (this._ignoreCase) { word = word.toLowerCase() };
         try {
-            return this.traverseTrie(word).isWord();
+            return this.traverse(word).isWord();
         } catch (ex) {
             // something happened suring traversal. TypeError suggests there is
             // no further nodes to traverse. word does not exist!

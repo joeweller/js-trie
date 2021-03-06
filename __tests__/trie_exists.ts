@@ -1,4 +1,4 @@
-import { Trie } from '../src/trie'
+import { Trie } from '../src/index'
 
 describe('Trie add and identifies word testing inbetween patterns', () => {
     it('add all word without error with permutations', () => {

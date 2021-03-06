@@ -1,4 +1,4 @@
-import { Trie } from '../src/trie'
+import { Trie } from '../src/index'
 
 describe('delete words (multiple) from Trie', () => {
     it('add word and delete it (case sensitive)', () => {

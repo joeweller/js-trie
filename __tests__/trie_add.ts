@@ -1,4 +1,4 @@
-import { Trie } from '../src/trie'
+import { Trie } from '../src/index'
 
 describe('trie add and identifies word (single)', () => {
     
