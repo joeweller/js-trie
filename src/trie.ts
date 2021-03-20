@@ -11,8 +11,8 @@ export { Trie, TrieNode }
  * @param isEnd denotes Trie node is end of a word upon instantiation
  */
 class TrieNode {
-    public _node: Record<string, TrieNode>;
-    public _isWord: boolean;
+    protected _node: Record<string, TrieNode>;
+    protected _isWord: boolean;
 
     /**
      * @constructor
@@ -65,7 +65,7 @@ class TrieNode {
  * @description Trie Object structure
  */
 class Trie {
-    public _head: TrieNode | TriePopularSearchNode;
+    protected _head: TrieNode;
     public _ignoreCase: boolean;
 
     /**
@@ -80,20 +80,21 @@ class Trie {
     /**
      * @description traverse Trie to lookup a word
      * @param {string} word string for Trie lookup
-     * @returns {TrieNode}
+     * @returns {Array<TrieNode>}
      */
-    private traverse(word: string): TrieNode {
-        var node: TrieNode = this._head;
-
+    protected traverse(word: string): Array<TrieNode> {
+        var current: TrieNode = this._head;
+        var nodeArray: Array<TrieNode> = [ ];
         try {
             for (let i = 0; i < word.length; i++) {
-                node = node.next(word[i]);
+                current = current.next(word[i]);
+                nodeArray.unshift(current);
             };
         } catch (ex) {
             throw exception(`TrieNode does not exist for "${word[word.length - 1]}": word[${word.length - 1}]`);
         };
         
-        return node;
+        return nodeArray;
     };
 
 
@@ -181,7 +182,7 @@ class Trie {
     public exists(word: string): boolean {
         if (this._ignoreCase) { word = word.toLowerCase() };
         try {
-            return this.traverse(word).isWord();
+            return this.traverse(word)[0].isWord();
         } catch (ex) {
             // something happened suring traversal. TypeError suggests there is
             // no further nodes to traverse. word does not exist!
