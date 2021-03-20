@@ -8,8 +8,8 @@ import { exception } from "console";
 export { TriePopularSearch, TriePopularSearchNode }
 
 class TriePopularSearchNode extends TrieNode {
-    protected _node: Record<string, TriePopularSearchNode>;
-    protected _weight: BigInt;
+    public _node: Record<string, TriePopularSearchNode>;
+    public _weight: bigint;
 
     constructor(isEnd: boolean) {
         super(isEnd);
@@ -29,7 +29,7 @@ class TriePopularSearchNode extends TrieNode {
 };
 
 class TriePopularSearch extends Trie {
-    protected _head: TriePopularSearchNode;
+    public _head: TriePopularSearchNode;
     /**
      * @constructor
      * @param {boolean} ignoreCase identifies if Trie should ignore case
@@ -44,20 +44,20 @@ class TriePopularSearch extends Trie {
      * @param {string} word string for Trie lookup
      * @returns {Array<TriePopularSearchNode>}
      */
-         protected traverse(word: string): Array<TriePopularSearchNode> {
-            var current: TriePopularSearchNode = this._head;
-            var nodeArray: Array<TriePopularSearchNode> = [ ];
-            try {
-                for (let i = 0; i < word.length; i++) {
-                    current = current.next(word[i]);
-                    nodeArray.unshift(current);
-                };
-            } catch (ex) {
-                throw exception(`TrieNode does not exist for "${word[word.length - 1]}": word[${word.length - 1}]`);
+    public traverse(word: string): Array<TriePopularSearchNode> {
+        var current: TriePopularSearchNode = this._head;
+        var nodeArray: Array<TriePopularSearchNode> = [ ];
+        try {
+            for (let i = 0; i < word.length; i++) {
+                current = current.next(word[i]);
+                nodeArray.unshift(current);
             };
-            
-            return nodeArray;
+        } catch (ex) {
+            throw exception(`TrieNode does not exist for "${word[word.length - 1]}": word[${word.length - 1}]`);
         };
+        
+        return nodeArray;
+    };
 
     /**
      * @description traverse Trie and return the next most popular word by weight
@@ -66,7 +66,7 @@ class TriePopularSearch extends Trie {
      * - Returns empty string if word has not been found
      */
     private traverseWeighted(head: TriePopularSearchNode): string {
-        let stringArray: Array<String> = [ ];
+        let stringArray: Array<string> = [ ];
         let wordFound: boolean = false;
         while(false === wordFound || Object.keys(head._node).length > 0) {
             let lrgWeight: BigInt = BigInt(0);
@@ -95,8 +95,7 @@ class TriePopularSearch extends Trie {
         if (this._ignoreCase) { word = word.toLowerCase() };
         try {
             const nodes: Array<TriePopularSearchNode> = this.traverse(word);
-            
-            nodes.forEach((node) => { node._weight = ++BigInt(node._weight) })
+            nodes.forEach((node) => { node._weight = node._weight++ });
             return this.traverse(word)[0].isWord();
         } catch (ex) {
             // something happened suring traversal. TypeError suggests there is

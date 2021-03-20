@@ -14,7 +14,7 @@
     "ts-jest": "^26.5.1"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --verbose",
     "compile": "tsc",
     "postinstall": "npm i",
     "docs": "jsdoc2md dist/*.js > api.md"

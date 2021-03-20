@@ -11,8 +11,8 @@ export { Trie, TrieNode }
  * @param isEnd denotes Trie node is end of a word upon instantiation
  */
 class TrieNode {
-    protected _node: Record<string, TrieNode>;
-    protected _isWord: boolean;
+    public _node: Record<string, TrieNode>;
+    public _isWord: boolean;
 
     /**
      * @constructor
@@ -65,7 +65,7 @@ class TrieNode {
  * @description Trie Object structure
  */
 class Trie {
-    protected _head: TrieNode;
+    public _head: TrieNode;
     public _ignoreCase: boolean;
 
     /**
@@ -82,7 +82,7 @@ class Trie {
      * @param {string} word string for Trie lookup
      * @returns {Array<TrieNode>}
      */
-    protected traverse(word: string): Array<TrieNode> {
+    public traverse(word: string): Array<TrieNode> {
         var current: TrieNode = this._head;
         var nodeArray: Array<TrieNode> = [ ];
         try {
