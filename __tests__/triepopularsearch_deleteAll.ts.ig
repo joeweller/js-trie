@@ -1,8 +1,8 @@
-import { Trie } from '../src/trie'
+import { TriePopularSearch } from '../src/index'
 
 describe('delete words (multiple) from Trie', () => {
     it('add word and delete it (case sensitive)', () => {
-        const trie = new Trie();
+        const trie = new TriePopularSearch();
         trie.addAll(["apple", "Apple", "apricot", "Apricot"]);
 
         expect(trie.exists("apple")).toBe(true);
@@ -19,7 +19,7 @@ describe('delete words (multiple) from Trie', () => {
     })
 
     it('add word and delete it (case insensitive)', () => {
-        const trie = new Trie(true);
+        const trie = new TriePopularSearch(true);
         trie.addAll(["apple", "Apple"]);
 
         expect(trie.exists("apple")).toBe(true);
@@ -32,7 +32,7 @@ describe('delete words (multiple) from Trie', () => {
     })
 
     it('add word and delete it (sequential - case sensitive)', () => {
-        const trie = new Trie();
+        const trie = new TriePopularSearch();
         trie.addAll(["apple", "Apple",  "apples"]);
 
         expect(trie.exists("Apple")).toBe(true);
@@ -47,7 +47,7 @@ describe('delete words (multiple) from Trie', () => {
     })
 
     it('add word and delete it (sequential - case insensitive)', () => {
-        const trie = new Trie(true);
+        const trie = new TriePopularSearch(true);
         trie.addAll(["apple", "Apple",  "apples"]);
 
         expect(trie.exists("Apple")).toBe(true);
