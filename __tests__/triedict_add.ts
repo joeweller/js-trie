@@ -1,10 +1,9 @@
-import { Trie } from '../src/index'
+import { TrieDict } from '../src/index'
 
 describe('trie add and identifies word (single)', () => {
     
     it('add a word (single)', () => {
-        const trie = new Trie();
-        
+        const trie = new TrieDict();
         expect(trie.exists("apple")).toBe(false);
         
         trie.add("apple");
@@ -13,8 +12,7 @@ describe('trie add and identifies word (single)', () => {
     });
 
     it('add a word (multiple)', () => {
-        const trie = new Trie();
-
+        const trie = new TrieDict();
         expect(trie.exists("apple")).toBe(false);
         expect(trie.exists("apricot")).toBe(false);
         
@@ -26,8 +24,7 @@ describe('trie add and identifies word (single)', () => {
     });
     
     it('add a word (same)', () => {
-        const trie = new Trie();
-        
+        const trie = new TrieDict();
         expect(trie.exists("apple")).toBe(false);
         expect(trie.exists("apricot")).toBe(false);
         

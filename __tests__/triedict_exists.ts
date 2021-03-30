@@ -1,8 +1,8 @@
-import { Trie } from '../src/index'
+import { TrieDict } from '../src/index'
 
 describe('Trie add and identifies word testing inbetween patterns', () => {
     it('add all word without error with permutations', () => {
-        const trie = new Trie();
+        const trie = new TrieDict();
         
         expect(trie.exists("apple")).toBe(false);
 
@@ -18,7 +18,7 @@ describe('Trie add and identifies word testing inbetween patterns', () => {
 
 describe('Trie add and identifies word (case sensitivity)', () => {
     it('add all words (case sensitive - default)', () => {
-        const trie = new Trie();
+        const trie = new TrieDict();
         
         expect(trie.isIgnoreCase()).toBe(false);
         expect(trie.exists("apple")).toBe(false);
@@ -30,7 +30,7 @@ describe('Trie add and identifies word (case sensitivity)', () => {
     });
 
     it('add all words (case sensitive - explicit)', () => {
-        const trie = new Trie(false);
+        const trie = new TrieDict(false);
         
         expect(trie.isIgnoreCase()).toBe(false);
         expect(trie.exists("apple")).toBe(false);
@@ -42,7 +42,7 @@ describe('Trie add and identifies word (case sensitivity)', () => {
     });
 
     it('add all words (case insensitive - explicit)', () => {
-        const trie = new Trie(true);
+        const trie = new TrieDict(true);
 
         expect(trie.isIgnoreCase()).toBe(true);
         expect(trie.exists("apple")).toBe(false);
@@ -56,7 +56,7 @@ describe('Trie add and identifies word (case sensitivity)', () => {
 
 describe('Trie add and identifies with special characters', () => {
     it('add all words + special (case sensitive)', () => {
-        const trie = new Trie();
+        const trie = new TrieDict();
 
         expect(trie.isIgnoreCase()).toBe(false);
         expect(trie.exists("applE/<>{}")).toBe(false);
@@ -68,7 +68,7 @@ describe('Trie add and identifies with special characters', () => {
     })
 
     it('add all words + special (case insensitive)', () => {
-        const trie = new Trie(true);
+        const trie = new TrieDict(true);
 
         expect(trie.isIgnoreCase()).toBe(true);
         expect(trie.exists("applE/<>{}")).toBe(false);
