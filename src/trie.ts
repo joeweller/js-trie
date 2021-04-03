@@ -1,4 +1,3 @@
-
 export { Trie, TrieNode }
 
 
@@ -8,17 +7,17 @@ export { Trie, TrieNode }
  * @description an inner node element Trie class
  * @param isEnd denotes Trie node is end of a word upon instantiation
  */
-abstract class TrieNode {
-    public _node: Record<string, any>;
-    public _parent: any | null; // parent node
+class TrieNode {
+    public _node: Record<string, TrieNode>;
+    public _parent: TrieNode | null; // parent node
     public _value: string | null; // string value of this node
 
     /**
      * @constructor
-     * @param {any} parentNode which this is a child of
+     * @param {TrieNode} parentNode which this is a child of
      * @param {string} nodeValue the string value that binds this node on the parent
      */
-    constructor(parentNode?: any, nodeValue?: string) {
+    constructor(parentNode?: TrieNode, nodeValue?: string) {
         this._node = { };
         this._parent = parentNode || null;
         this._value = nodeValue || null;
@@ -29,9 +28,9 @@ abstract class TrieNode {
      * @param {string} element string representing a single character
      * @returns {TrieNode} node for element
      */
-    public _add(element: string, trieNodeClass: any): any {
+    public _add(element: string, nodeClass: any): any {
         if (undefined === this._node[element]) {
-            this._node[element] = new trieNodeClass(this, element);
+            this._node[element] = new nodeClass(this, element);
         }
         return this._node[element];
     };
@@ -50,7 +49,7 @@ abstract class TrieNode {
  * @class module:trie.Trie
  * @description Trie Object structure
  */
-abstract class Trie {
+class Trie {
     public _head: any;
 
     /**
@@ -66,8 +65,8 @@ abstract class Trie {
      * @param {string} word string for Trie lookup
      * @returns {Array<any>} array of TrieNodes
      */
-    public _traverse(word: string): Array<any> | null {
-        var nodeArray: Array<any> = [ this._head ];
+    public _traverse(word: string): Array<TrieNode> | null {
+        var nodeArray: Array<TrieNode> = [ this._head ];
         try {
             for (let i = 0; i < word.length; i++) {
                 nodeArray.unshift(nodeArray[0].next(word[i]));
@@ -85,12 +84,12 @@ abstract class Trie {
     /**
      * @description add word to trie
      * @param {string} word string to add to trie
-     * @returns {Array<any>} array of TrieNodes
+     * @returns {Array<TrieNode>} array of TrieNodes
      */
-    public _add(word: string, trieNodeClass: any): Array<any> {
-        const nodeArray: Array<any> = [ this._head ];
+    public _add(word: string, nodeClass: any): Array<TrieNode> {
+        const nodeArray: Array<TrieNode> = [ this._head ];
         for (let i = 0; i < word.length; i++) {
-            nodeArray.unshift(nodeArray[0]._add(word[i], trieNodeClass));
+            nodeArray.unshift(nodeArray[0]._add(word[i], nodeClass));
         };
         return nodeArray;
     };

@@ -20,6 +20,7 @@ class TrieDictNode extends TrieNode {
         this._isWord = false;
     };
 
+
     /**
      * @description returns current state of the TrieDictNode denoting. Optional
      * boolean param will modify existing state
@@ -46,6 +47,10 @@ class TrieDict extends Trie {
     constructor(ignoreCase?: boolean) {
         super(new TrieDictNode());
         this._ignoreCase = ignoreCase || false;
+    };
+
+    public static isTrieDictNode(item?: TrieNode): item is TrieDictNode {
+        return item instanceof TrieDictNode;
     };
 
     /**
@@ -75,7 +80,11 @@ class TrieDict extends Trie {
      * @returns {void}
      */
     public add(word: string): void {
-        this._add(this.alignCase(word), TrieDictNode)[0].isWord(true);
+        const result: Array<TrieNode> = this._add(this.alignCase(word), TrieDictNode);
+        const resultItem: TrieNode = result[0];
+        if (TrieDict.isTrieDictNode(resultItem)) {
+            resultItem.isWord(true);
+        };
     };
 
     /**
@@ -97,10 +106,11 @@ class TrieDict extends Trie {
      * @returns {void}
      */
     public delete(word: string): void {
-        let nodeArray = this._traverse(this.alignCase(word));
-        if (null !== nodeArray) {
-            nodeArray[0].isWord(false)
-        }
+        let result: Array<TrieNode> | null = this._traverse(this.alignCase(word));
+        let resultItem = result?.[0];
+        if (TrieDict.isTrieDictNode(resultItem)) {
+            resultItem.isWord(false)
+        };
     };
 
     /**
@@ -122,18 +132,11 @@ class TrieDict extends Trie {
      * @returns {boolean} result of opteration
      */
     public exists(word: string): boolean {
-        try {
-            const result: Array<TrieDictNode> | null = this._traverse(this.alignCase(word));
-            if (result) {
-                return result[0].isWord();
-            }
-        } catch (ex) {
-            // something happened suring traversal. TypeError suggests there is
-            // no further nodes to traverse. word does not exist!
-            if (!(ex instanceof TypeError)) {
-                throw ex;
-            };
-        };
+        const result: Array<TrieNode> | null = this._traverse(this.alignCase(word));
+        const resultItem = result?.[0];
+        if (TrieDict.isTrieDictNode(resultItem)) {
+            return resultItem.isWord();
+        }
         return false;
     };
 };
