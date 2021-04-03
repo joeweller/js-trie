@@ -5,10 +5,8 @@ import { Trie, TrieNode } from './trie'
 export { TrieDict, TrieDictNode }
 
 /**
- * @private
  * @type TrieDictNode
  * @description an inner node element Trie class
- * @param isEnd denotes Trie node is end of a word upon instantiation
  */
 class TrieDictNode extends TrieNode {
     public _isWord: boolean;
@@ -20,19 +18,6 @@ class TrieDictNode extends TrieNode {
     constructor() {
         super()
         this._isWord = false;
-    };
-
-    /**
-     * @description adds a new TrieDictNode for the specified element if needed. If
-     * TrieDictNode exists then modify if it is end of a word
-     * @param {string} element string representing a single character
-     * @param {boolean} isEnd determins if new node should be marked as end of word
-     * @returns {TrieDictNode} node for element
-     */
-    public add(element: string, isEnd: boolean): TrieDictNode {
-        const childNode = this._add(element, TrieDictNode);
-        childNode.isWord(isEnd);
-        return childNode;
     };
 
     /**
@@ -48,11 +33,10 @@ class TrieDictNode extends TrieNode {
 };
 
 /**
- * @class module:trie.Trie
+ * @class module:triedict.TrieDict
  * @description Trie Object structure
  */
 class TrieDict extends Trie {
-    public _head: TrieDictNode;
     public _ignoreCase: boolean;
 
     /**
@@ -60,17 +44,15 @@ class TrieDict extends Trie {
      * @param {boolean} ignoreCase identifies if Trie should ignore case
      */
     constructor(ignoreCase?: boolean) {
-        super();
-        this._head = new TrieDictNode();
+        super(new TrieDictNode());
         this._ignoreCase = ignoreCase || false;
     };
 
-
     /**
-     * @description describes current Trie state that detmines if methods 
-     * {@link Trie#add} {@link Trie#addAll} {@link Trie#exists} should ignore
-     * alpha character case. This state is declared upon Trie initialization
-     * @function module:trie.Trie#isIgnoreCase
+     * @description describes current Trie state that determines if methods 
+     * should ignore alpha character case.
+     * This state is declared upon TrieDict initialization
+     * @function module:triedict.TrieDict#isIgnoreCase
      * @returns {boolean} ignore case state
      */
     public isIgnoreCase(): boolean {
@@ -78,56 +60,51 @@ class TrieDict extends Trie {
     };
 
     /**
-     * @function module:trie.Trie#add
+     * @description returns input string aligned with current case state
+     * @param word for case alignment
+     * @returns {string} word aligned with case state
+     */
+    public alignCase(word: string): string {
+        return (this._ignoreCase) ? word.toLowerCase() : word;
+    };
+
+    /**
+     * @function module:triedict.TrieDict#add
      * @description adds a word to the Trie
      * @param {string} word string to be loaded
      * @returns {void}
      */
     public add(word: string): void {
-        if (this._ignoreCase) { word = word.toLowerCase() };
-
-        const wordEnd: number = (word.length - 1);
-        let current: TrieDictNode = this._head;
-        for (let i = 0; i < word.length; i++){
-            current = current.add(word[i], (wordEnd === i));
-        };
+        this._add(this.alignCase(word), TrieDictNode)[0].isWord(true);
     };
 
     /**
-     * @function module:trie.Trie#addAll
+     * @function module:triedict.TrieDict#addAll
      * @description adds an array of strings into the Trie
      * @param {Array<string>} wordArray array of strings to be added
      * @returns {void}
      */
-    public addAll(wordArray: Array<string>): boolean {
+    public addAll(wordArray: Array<string>): void {
         for (let i = 0; i < wordArray.length; i++) {
             this.add(wordArray[i]);
         };
-        return true;
     };
 
     /**
-     * @function module:trie.Trie#delete
+     * @function module:triedict.TrieDict#delete
      * @description deletes a word from the Trie
      * @param {string} word string to delete
      * @returns {void}
      */
     public delete(word: string): void {
-        if (this._ignoreCase) { word = word.toLowerCase() };
-        try {
-            this.traverse(word)[0].isWord(false)
-        } catch (ex) {
-            // something happened during traversal. TypeError suggests there is
-            // no further nodes to traverse. word does not exist!
-            // aka.. there's nothing to delete!
-            if (!(ex instanceof TypeError)) {
-                throw exception(ex);
-            };
-        };
+        let nodeArray = this._traverse(this.alignCase(word));
+        if (null !== nodeArray) {
+            nodeArray[0].isWord(false)
+        }
     };
 
     /**
-     * @function module:trie.Trie#deleteAll
+     * @function module:triedict.TrieDict#deleteAll
      * @description deletes an array of words from the Trie
      * @param {Array<string>} wordArray array of strings to delete
      * @returns {void}
@@ -139,15 +116,17 @@ class TrieDict extends Trie {
     };
     
     /**
-     * @function module:trie.Trie#exists
+     * @function module:triedict.TrieDict#exists
      * @description checks if provided string exists as a word within the Trie
      * @param {string} word string to search within Trie
      * @returns {boolean} result of opteration
      */
     public exists(word: string): boolean {
-        if (this._ignoreCase === true) { word = word.toLowerCase() };
         try {
-            return this.traverse(word)[0].isWord();
+            const result: Array<TrieDictNode> | null = this._traverse(this.alignCase(word));
+            if (result) {
+                return result[0].isWord();
+            }
         } catch (ex) {
             // something happened suring traversal. TypeError suggests there is
             // no further nodes to traverse. word does not exist!
