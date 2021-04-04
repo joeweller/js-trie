@@ -1,11 +1,8 @@
 export { Trie, TrieNode }
 
-
 /**
- * @private
  * @type TrieNode
- * @description an inner node element Trie class
- * @param isEnd denotes Trie node is end of a word upon instantiation
+ * @description Base class - node element for Trie
  */
 class TrieNode {
     public _node: Record<string, TrieNode>;
@@ -46,8 +43,8 @@ class TrieNode {
 };
 
 /**
- * @class module:trie.Trie
- * @description Trie Object structure
+ * @type Trie
+ * @description Base class - Trie Object structure
  */
 class Trie {
     public _head: any;
@@ -82,8 +79,8 @@ class Trie {
     };
 
     /**
-     * @description add word to trie
-     * @param {string} word string to add to trie
+     * @description adds string to Trie
+     * @param {string} word data to add to Trie
      * @returns {Array<TrieNode>} array of TrieNodes
      */
     public _add(word: string, nodeClass: any): Array<TrieNode> {
@@ -93,6 +90,4 @@ class Trie {
         };
         return nodeArray;
     };
-
-
 };

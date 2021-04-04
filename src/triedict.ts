@@ -1,12 +1,10 @@
-
-import { exception } from "console";
 import { Trie, TrieNode } from './trie'
 
 export { TrieDict, TrieDictNode }
 
 /**
- * @type TrieDictNode
- * @description an inner node element Trie class
+ * @class module:triedict.TrieDictNode
+ * @description child node class for TrieDict
  */
 class TrieDictNode extends TrieNode {
     public _isWord: boolean;
@@ -22,7 +20,7 @@ class TrieDictNode extends TrieNode {
 
 
     /**
-     * @description returns current state of the TrieDictNode denoting. Optional
+     * @description  current state of the TrieDictNode denoting. Optional
      * boolean param will modify existing state
      * @param {boolean} option modifies current state of node to received param
      * @returns {boolean} word state
@@ -35,7 +33,7 @@ class TrieDictNode extends TrieNode {
 
 /**
  * @class module:triedict.TrieDict
- * @description Trie Object structure
+ * @description TrieDict class
  */
 class TrieDict extends Trie {
     public _ignoreCase: boolean;
