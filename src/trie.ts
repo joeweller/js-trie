@@ -1,6 +1,7 @@
 export { Trie, TrieNode }
 
 /**
+ * @private
  * @type TrieNode
  * @description Base class - node element for Trie
  */
@@ -43,6 +44,7 @@ class TrieNode {
 };
 
 /**
+ * @private
  * @type Trie
  * @description Base class - Trie Object structure
  */
@@ -51,7 +53,7 @@ class Trie {
 
     /**
      * @constructor
-     * @param {any} trieNodeClass trieNodeClass to be instantiated
+     * @param {any} trieNodeClass TrieNode class to be instantiated
      */
     constructor(trieNodeClass: any) {
         this._head = trieNodeClass;

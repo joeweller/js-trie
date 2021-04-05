@@ -1,98 +1,122 @@
-<a name="module_trie"></a>
+## Modules
 
-## trie
+<dl>
+<dt><a href="#module_js-trie">js-trie</a></dt>
+<dd></dd>
+</dl>
 
-* [trie](#module_trie)
-    * [.Trie](#module_trie.Trie)
-        * [new Trie()](#new_module_trie.Trie_new)
-        * [.isIgnoreCase()](#module_trie.Trie+isIgnoreCase) ⇒ <code>boolean</code>
-        * [.add(word)](#module_trie.Trie+add) ⇒ <code>void</code>
-        * [.addAll(wordArray)](#module_trie.Trie+addAll) ⇒ <code>void</code>
-        * [.delete(word)](#module_trie.Trie+delete) ⇒ <code>void</code>
-        * [.deleteAll(wordArray)](#module_trie.Trie+deleteAll) ⇒ <code>void</code>
-        * [.exists(word)](#module_trie.Trie+exists) ⇒ <code>boolean</code>
+## Classes
 
-<a name="module_trie.Trie"></a>
+<dl>
+<dt><a href="#TrieDict">TrieDict</a></dt>
+<dd><p>TrieDict</p>
+</dd>
+<dt><a href="#TrieDict">TrieDict</a></dt>
+<dd></dd>
+</dl>
 
-### trie.Trie
-**Kind**: static class of [<code>trie</code>](#module_trie)  
+<a name="module_js-trie"></a>
 
-* [.Trie](#module_trie.Trie)
-    * [new Trie()](#new_module_trie.Trie_new)
-    * [.isIgnoreCase()](#module_trie.Trie+isIgnoreCase) ⇒ <code>boolean</code>
-    * [.add(word)](#module_trie.Trie+add) ⇒ <code>void</code>
-    * [.addAll(wordArray)](#module_trie.Trie+addAll) ⇒ <code>void</code>
-    * [.delete(word)](#module_trie.Trie+delete) ⇒ <code>void</code>
-    * [.deleteAll(wordArray)](#module_trie.Trie+deleteAll) ⇒ <code>void</code>
-    * [.exists(word)](#module_trie.Trie+exists) ⇒ <code>boolean</code>
+## js-trie
+<a name="TrieDict"></a>
 
-<a name="new_module_trie.Trie_new"></a>
+## TrieDict
+TrieDict
 
-#### new Trie()
-Trie Object structure
+**Kind**: global class  
+**Access**: public  
 
-<a name="module_trie.Trie+isIgnoreCase"></a>
+* [TrieDict](#TrieDict)
+    * [new TrieDict()](#new_TrieDict_new)
+    * [new TrieDict(ignoreCase)](#new_TrieDict_new)
 
-#### trie.isIgnoreCase() ⇒ <code>boolean</code>
-describes current Trie state that detmines if methods
-[Trie#add](Trie#add) [Trie#addAll](Trie#addAll) [Trie#exists](Trie#exists) should ignore
-alpha character case. This state is declared upon Trie initialization
+<a name="new_TrieDict_new"></a>
 
-**Kind**: instance method of [<code>Trie</code>](#module_trie.Trie)  
+### new TrieDict()
+TrieDict class
+
+<a name="new_TrieDict_new"></a>
+
+### new TrieDict(ignoreCase)
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ignoreCase | <code>boolean</code> | identifies if Trie should ignore case |
+
+<a name="TrieDict"></a>
+
+## TrieDict
+**Kind**: global class  
+
+* [TrieDict](#TrieDict)
+    * [new TrieDict()](#new_TrieDict_new)
+    * [new TrieDict(ignoreCase)](#new_TrieDict_new)
+
+<a name="new_TrieDict_new"></a>
+
+### new TrieDict()
+TrieDict class
+
+<a name="new_TrieDict_new"></a>
+
+### new TrieDict(ignoreCase)
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ignoreCase | <code>boolean</code> | identifies if Trie should ignore case |
+
+<a name="isIgnoreCase"></a>
+
+## .isIgnoreCase() ⇒ <code>boolean</code>
+describes current Trie state that determines if methods
+should ignore alpha character case.
+This state is declared upon TrieDict initialization
+
+**Kind**: instance function  
 **Returns**: <code>boolean</code> - ignore case state  
-<a name="module_trie.Trie+add"></a>
+<a name="add"></a>
 
-#### trie.add(word) ⇒ <code>void</code>
+## .add(wordOrWords) ⇒ <code>void</code>
 adds a word to the Trie
 
-**Kind**: instance method of [<code>Trie</code>](#module_trie.Trie)  
+**Kind**: instance function  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| word | <code>string</code> | string to be loaded |
+| wordOrWords | <code>Array.&lt;string&gt;</code> \| <code>string</code> | word or list of words to be added to Trie |
 
-<a name="module_trie.Trie+addAll"></a>
+<a name="delete"></a>
 
-#### trie.addAll(wordArray) ⇒ <code>void</code>
-adds an array of strings into the Trie
-
-**Kind**: instance method of [<code>Trie</code>](#module_trie.Trie)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| wordArray | <code>Array.&lt;string&gt;</code> | array of strings to be added |
-
-<a name="module_trie.Trie+delete"></a>
-
-#### trie.delete(word) ⇒ <code>void</code>
+## .delete(wordOrWords) ⇒ <code>void</code>
 deletes a word from the Trie
 
-**Kind**: instance method of [<code>Trie</code>](#module_trie.Trie)  
+**Kind**: instance function  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| word | <code>string</code> | string to delete |
+| wordOrWords | <code>Array.&lt;string&gt;</code> \| <code>string</code> | word or list of words to delete from Trie |
 
-<a name="module_trie.Trie+deleteAll"></a>
+<a name="exists"></a>
 
-#### trie.deleteAll(wordArray) ⇒ <code>void</code>
-deletes an array of words from the Trie
-
-**Kind**: instance method of [<code>Trie</code>](#module_trie.Trie)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| wordArray | <code>Array.&lt;string&gt;</code> | array of strings to delete |
-
-<a name="module_trie.Trie+exists"></a>
-
-#### trie.exists(word) ⇒ <code>boolean</code>
+## .exists(word) ⇒ <code>boolean</code>
 checks if provided string exists as a word within the Trie
 
-**Kind**: instance method of [<code>Trie</code>](#module_trie.Trie)  
-**Returns**: <code>boolean</code> - result of opteration  
+**Kind**: instance function  
+**Returns**: <code>boolean</code> - isWord state for node  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | word | <code>string</code> | string to search within Trie |
+
+<a name="isTrieDictNode"></a>
+
+## .isTrieDictNode(item) ⇒ <code>boolean</code>
+determines if specified object is instance of TrieDictNode
+
+**Kind**: static function  
+**Returns**: <code>boolean</code> - result of test  
+
+| Param | Description |
+| --- | --- |
+| item | an object |
 

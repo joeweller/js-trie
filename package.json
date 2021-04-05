@@ -10,14 +10,16 @@
   "devDependencies": {
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.31",
+    "jsdoc": "^3.6.6",
     "jsdoc-to-markdown": "^6.0.1",
     "ts-jest": "^26.5.1"
   },
   "scripts": {
     "test": "jest --verbose",
-    "compile": "tsc",
-    "postinstall": "npm i",
-    "docs": "jsdoc2md dist/*.js > api.md"
+    "clearcache": "rm ./dist/*",
+    "compile": "npm run clearcache && tsc",
+    "docs": "jsdoc2md dist/*.js > api.md",
+    "compiledocs": "npm run compile && npm run docs"
   },
   "author": "Joe Weller",
   "license": "ISC"

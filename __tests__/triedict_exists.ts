@@ -3,7 +3,6 @@ import { TrieDict } from '../src/index'
 describe('Trie add and identifies word testing inbetween patterns', () => {
     it('add all word without error with permutations', () => {
         const trie = new TrieDict();
-        
         expect(trie.exists("apple")).toBe(false);
 
         trie.add("apple");
@@ -19,7 +18,6 @@ describe('Trie add and identifies word testing inbetween patterns', () => {
 describe('Trie add and identifies word (case sensitivity)', () => {
     it('add all words (case sensitive - default)', () => {
         const trie = new TrieDict();
-        
         expect(trie.isIgnoreCase()).toBe(false);
         expect(trie.exists("apple")).toBe(false);
         
@@ -31,7 +29,6 @@ describe('Trie add and identifies word (case sensitivity)', () => {
 
     it('add all words (case sensitive - explicit)', () => {
         const trie = new TrieDict(false);
-        
         expect(trie.isIgnoreCase()).toBe(false);
         expect(trie.exists("apple")).toBe(false);
         
@@ -43,7 +40,6 @@ describe('Trie add and identifies word (case sensitivity)', () => {
 
     it('add all words (case insensitive - explicit)', () => {
         const trie = new TrieDict(true);
-
         expect(trie.isIgnoreCase()).toBe(true);
         expect(trie.exists("apple")).toBe(false);
         
@@ -52,12 +48,11 @@ describe('Trie add and identifies word (case sensitivity)', () => {
         expect(trie.exists("apple")).toBe(true);
         expect(trie.exists("Apple")).toBe(true);
     });
-})
+});
 
 describe('Trie add and identifies with special characters', () => {
     it('add all words + special (case sensitive)', () => {
         const trie = new TrieDict();
-
         expect(trie.isIgnoreCase()).toBe(false);
         expect(trie.exists("applE/<>{}")).toBe(false);
         
@@ -65,11 +60,10 @@ describe('Trie add and identifies with special characters', () => {
         
         expect(trie.exists("applE/<>{}")).toBe(true);
         expect(trie.exists("apple/<>{}")).toBe(false);
-    })
+    });
 
     it('add all words + special (case insensitive)', () => {
         const trie = new TrieDict(true);
-
         expect(trie.isIgnoreCase()).toBe(true);
         expect(trie.exists("applE/<>{}")).toBe(false);
         
@@ -77,5 +71,5 @@ describe('Trie add and identifies with special characters', () => {
         
         expect(trie.exists("applE/<>{}")).toBe(true);
         expect(trie.exists("apple/<>{}")).toBe(true);
-    })
-})
+    });
+});

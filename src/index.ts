@@ -1,4 +1,6 @@
-/** @module trie */
+/**
+ * @module js-trie
+ * */
 import  { TrieDict } from './triedict'
 // import  { TriePopularSearch } from './triepopularsearch'
 
