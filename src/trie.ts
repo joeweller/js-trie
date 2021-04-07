@@ -26,7 +26,7 @@ class TrieNode {
      * @param {string} element string representing a single character
      * @returns {TrieNode} node for element
      */
-    public _add(element: string): TrieNode {
+    public _addChild(element: string): TrieNode {
         if (undefined === this._child[element]) {
             this._child[element] = new this.constructor.prototype.constructor(this, element);
         }
@@ -78,17 +78,11 @@ class Trie {
         };
 
         if (!result.every(e => typeof e === 'string')) {
-            throw TypeError();
+            throw TypeError('must provide \'string\' or \'Array<String>\'');
         };
 
         return result;
     }
-
-
-    // public static _isNodeType(item?: TrieNode): boolean {
-    //     return item instanceof this._head;
-    // };
-
 
     /**
      * @description traverse Trie to lookup a word
@@ -119,7 +113,7 @@ class Trie {
     public _add(word: string): Array<TrieNode> {
         const nodeArray: Array<TrieNode> = [ this._head ];
         for (let i = 0; i < word.length; i++) {
-            nodeArray.unshift(nodeArray[0]._add(word[i]));
+            nodeArray.unshift(nodeArray[0]._addChild(word[i]));
         };
         return nodeArray;
     };
