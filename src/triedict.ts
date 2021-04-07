@@ -1,11 +1,14 @@
+import { ThrowStatement } from 'typescript';
 import { Trie, TrieNode } from './trie'
+
+export { TrieDict }
 
 /**
  * @private
  * @class TrieDictNode
  * @description child node class for TrieDict
  */
-class TrieDictNode extends TrieNode {
+class TrieDictNode extends TrieNode implements TrieNode {
     public _isWord: boolean;
 
     /**
@@ -65,17 +68,6 @@ class TrieDict extends Trie {
     };
 
     /**
-     * @static
-     * @method isTrieDictNode
-     * @description determines if specified object is instance of TrieDictNode
-     * @param item an object
-     * @returns {boolean} result of test
-     */
-    public static isTrieDictNode(item?: TrieNode): item is TrieDictNode {
-        return item instanceof TrieDictNode;
-    };
-
-    /**
      * @instance
      * @function isIgnoreCase
      * @description describes current Trie state that determines if methods 
@@ -96,14 +88,10 @@ class TrieDict extends Trie {
      * @returns {void}
      */
     public add(wordOrWords: Array<string> | string): void {
-        const data: Array<string> = [];
-        if (Array.isArray(wordOrWords)) {
-            data.push(...wordOrWords);
-        } else {
-            data.push(wordOrWords);
-        };
-        for (let i = 0; i < data.length; ++i) {
-            const result: Array<TrieNode> = this._add(this._alignCase(data[i]), TrieDictNode);
+        wordOrWords = Trie.normaliseStringInput(wordOrWords);
+
+        for (let i = 0; i < wordOrWords.length; ++i) {
+            const result: Array<TrieNode> = this._add(this._alignCase(wordOrWords[i]));
             const resultItem: TrieNode = result[0];
             if (TrieDict.isTrieDictNode(resultItem)) {
                 resultItem.setWord(true);
@@ -120,15 +108,10 @@ class TrieDict extends Trie {
      * @returns {void}
      */
     public delete(wordOrWords: Array<string> | string): void {
-        const data: Array<string> = [];
-        if (Array.isArray(wordOrWords)) {
-            data.push(...wordOrWords);
-        } else {
-            data.push(wordOrWords);
-        };
+        wordOrWords = Trie.normaliseStringInput(wordOrWords);
 
-        for (let i = 0; i < data.length; ++i) {
-            let result: Array<TrieNode> | null = this._traverse(this._alignCase(data[i]));
+        for (let i = 0; i < wordOrWords.length; ++i) {
+            let result: Array<TrieNode> | null = this._traverse(this._alignCase(wordOrWords[i]));
             let resultItem = result?.[0];
             if (TrieDict.isTrieDictNode(resultItem)) {
                 resultItem.setWord(false);
@@ -151,6 +134,15 @@ class TrieDict extends Trie {
         };
         return false;
     };
-};
 
-export { TrieDict }
+    /**
+     * @static
+     * @method isTrieDictNode
+     * @description determines if specified object is instance of TrieDictNode
+     * @param item an object
+     * @returns {boolean} result of test
+     */
+    public static isTrieDictNode(item?: TrieNode): item is TrieDictNode {
+        return item instanceof TrieDictNode;
+    };
+};
