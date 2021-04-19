@@ -1,13 +1,10 @@
-export { Trie, TrieNode }
 
 /**
- * @private
  * @type TrieNode
  * @description Base class - node element for Trie
  */
 class TrieNode {
-    public _child: Record<string, TrieNode>;
-    public _parent: TrieNode | null; // parent node
+    public _children: Record<string, TrieNode>;
     public _value: string | null; // string value of this node
 
     /**
@@ -15,10 +12,9 @@ class TrieNode {
      * @param {TrieNode} parentNode which this is a child of
      * @param {string} nodeValue the string value that binds this node on the parent
      */
-    constructor(parentNode?: TrieNode, nodeValue?: string) {
-        this._child = { };
-        this._parent = parentNode || null;
-        this._value = nodeValue || null;
+    constructor(nodeValue: string | null) {
+        this._children = { };
+        this._value = nodeValue;
     };
 
     /**
@@ -27,10 +23,10 @@ class TrieNode {
      * @returns {TrieNode} node for element
      */
     public _addChild(element: string): TrieNode {
-        if (undefined === this._child[element]) {
-            this._child[element] = new this.constructor.prototype.constructor(this, element);
+        if (undefined === this._children[element]) {
+            this._children[element] = new this.constructor.prototype.constructor(this, element);
         }
-        return this._child[element];
+        return this._children[element];
     };
 
     /**
@@ -39,12 +35,11 @@ class TrieNode {
      * @returns {TrieNode} element's TrieNode
      */
     public next(element: string): any {
-        return this._child[element];
+        return this._children[element];
     };
 };
 
 /**
- * @private
  * @type Trie
  * @description Base class - Trie Object structure
  */
@@ -90,6 +85,9 @@ class Trie {
      * @returns {Array<any>} array of TrieNodes
      */
     public _traverse(word: string): Array<TrieNode> | null {
+        if (typeof word !== 'string') {
+            throw TypeError('must be of type \'string\'')
+        }
         var nodeArray: Array<TrieNode> = [ this._head ];
         try {
             for (let i = 0; i < word.length; i++) {
@@ -110,12 +108,25 @@ class Trie {
      * @param {string} word data to add to Trie
      * @returns {Array<TrieNode>} array of TrieNodes
      */
-    public _add(word: string): Array<TrieNode> {
+    public _insert(word: string): Array<TrieNode> {
+        if (typeof word !== 'string') {
+            throw TypeError('Must be type String')
+        }
         const nodeArray: Array<TrieNode> = [ this._head ];
         for (let i = 0; i < word.length; i++) {
             nodeArray.unshift(nodeArray[0]._addChild(word[i]));
         };
         return nodeArray;
     };
-    
 };
+
+interface ITrie {
+    insert(word: string): void;
+    remove(word: string): void;
+}
+
+export {
+    Trie,
+    ITrie,
+    TrieNode
+}

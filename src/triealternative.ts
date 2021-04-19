@@ -1,10 +1,6 @@
 // import { Trie, TrieNode } from './trie'
-// import { exception } from "console";
 
-// /**
-//  * @exports
-//  */
-// export { TrieAlternative, TrieAlternativeNode }
+// export { TrieAlternative }
 
 // class TrieAlternativeNode extends TrieNode {
 //     // public _node: Record<string, TrieAlternativeNode>;
@@ -24,28 +20,9 @@
 //      * @param {boolean} ignoreCase identifies if Trie should ignore case
 //      */
 //     constructor(ignoreCase?: boolean) {
-//         super(TrieAlternativeNode)
+//         super(new TrieAlternativeNode())
+//         this._ignore
 //     }
-
-//     /**
-//      * @description traverse Trie to lookup a word
-//      * @param {string} word string for Trie lookup
-//      * @returns {Array<TrieAlternativeNode>}
-//      */
-//     public traverse(word: string): Array<TrieAlternativeNode> {
-//         var current: TrieAlternativeNode = this._head;
-//         var nodeArray: Array<TrieAlternativeNode> = [ ];
-//         try {
-//             for (let i = 0; i < word.length; i++) {
-//                 current = current.next(word[i]);
-//                 nodeArray.unshift(current);
-//             };
-//         } catch (ex) {
-//             throw exception(`TrieAlternativeNode does not exist for "${word[word.length - 1]}": word[${word.length - 1}]`);
-//         };
-        
-//         return nodeArray;
-//     };
 
 //     /**
 //      * @function module:triealternative.TrieAlternative#exists
